@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example</title>
+  <style>
+    body {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    figure {
+      border: 1px solid black;
+      margin: 16px auto;
+      padding: 16px;
+      width: min-content;
+    }
+
+    img {
+      display: block;
+      margin-bottom: 16px;
+      width: 512px;
+    }
+  </style>
+</head>
+<body>
+  <figure>
+    <img id="img" />
+    <figcaption id="fig"></figcaption>
+  </figure>
+  <script>
+    (async () => {
+      const [ name ] = await fetch("http://localhost:3000/breeds")
+        .then((res) => res.json());
+
+      const { alt, src } = await fetch(`http://localhost:3000/breeds/${name}`)
+        .then((res) => res.json());
+
+      document.getElementById("img").src = src;
+      document.getElementById("fig").textContent = alt;
+    })();
+  </script>
+</body>
+</html>
